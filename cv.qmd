@@ -1,5 +1,13 @@
 ---
 subtitle: Curriculum Vitae
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.css
+    toc: true
+    smooth-scroll: true
+  pdf: default
 ---
 
 # Om mig
