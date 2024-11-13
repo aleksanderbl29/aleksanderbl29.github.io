@@ -62,3 +62,5 @@ format:
       - styles.css
     toc: true
     smooth-scroll: true
+  pdf: default
+  typst: default
