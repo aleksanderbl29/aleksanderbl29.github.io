@@ -1,4 +1,5 @@
 ---
+title: Aleksander Bang-Larsen
 subtitle: Curriculum Vitae
 format:
   html:
@@ -7,7 +8,17 @@ format:
       - styles.css
     toc: true
     smooth-scroll: true
-  pdf: default
+  pdf:
+    geometry:
+      - top=2cm
+      - bottom=4cm
+      - left=2cm
+      - right=2cm
+      - heightrounded
+    papersize: a4
+    # keep-tex: true
+    # template-partials:
+    #   - tex/cv-before-body.tex
 ---
 
 # Om mig
