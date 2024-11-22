@@ -9,6 +9,9 @@ project:
 
 lang: da
 
+filters:
+  - auto-dark
+
 website:
   title: "Aleksander Bang-Larsen"
   navbar:
