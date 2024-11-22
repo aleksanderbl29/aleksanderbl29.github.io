@@ -1,0 +1,62 @@
+---
+title: Introducerer `{dawaR}`
+citation:
+  url: https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar
+bibliography: refs.bib
+execute:
+  cache: true
+link-external-icon: true
+link-external-newwindow: true
+other-links:
+  - text: Dokumentation
+    icon: book
+    href: https://dawar.aleksanderbl.dk
+  - text: Github
+    icon: github
+    href: https://github.com/aleksanderbl29/dawaR
+date: 2024-11-22
+---
+
+Jeg har for nyligt offentliggjort min pakke `{dawaR}` der også er publiceret på [CRAN](https://CRAN.R-project.org/package=dawaR).
+
+# Hvad skal jeg bruge pakken til?
+
+Jeg lavede denne pakke fordi jeg blev træt af manuelt at interagere med Danmarks Adressers Web API når jeg skal lave kort og andre geospatiale opgaver. Det løser `{dawaR}`!
+
+# Primære funktioner
+
+`{dawaR}` har 4 primære funktioner:
+
+- `dawaR::get_data()`
+- `dawaR::get_map_data()`
+- `dawaR::autocomplete()`
+- `dawaR::reverse()`
+
+## `get_data()`
+
+`dawaR::get_data()` kan bruges til at hente data i ikke-geografisk format fra API'en. Det er brugtbart hvis man blot skal bruge alle kommuners officielle navne eller sammenlægge afstemningssteder eller sogne til den tilhørende politikreds, for blot at nævne et par stykker.
+
+## `get_map_data()`
+
+`dawaR::get_map_data()` returnerer et `{sf}` objekt med multipolygoner der er klar til at blive plottet med `ggplot2::geom_sf()`. Det kan du læse mere om [på pakkens hjemmeside](https://dawar.aleksanderbl.dk/articles/printing_maps.html). `get_map_data()` kan også bruges hvis du skal hente data til et geografisk projekt, men gerne vil slippe for at omformatere koordinater til polygoner og håndtere et [crs](https://en.wikipedia.org/wiki/Spatial_reference_system) - Den gør det hele for dig.
+
+```{r}
+#| column: margin
+#| fig-cap: Hurtigt kort over de danske regioner
+#| warning: false
+dawaR::get_map_data("regioner") |> ggplot2::ggplot() + ggplot2::geom_sf() + ggplot2::theme_void()
+```
+
+## `autocomplete()`
+
+`dawaR::autocomplete()` bruges til at autocomplete adresser eller navne på steder. Du kan den et input og den *sektion* der skal søges i, f.eks.: 
+
+```{r}
+#| column: margin
+dawaR::autocomplete("regioner", "midt")
+```
+
+## `reverse()`
+
+`dawaR::reverse()` bruges til at reverse-geokode koordinater til et geografisk område. Dette kan også gøres med `{sf}` pakken, men i `reverse()` slås der direkte op i det officielle register i stedet for at lave udregningen lokalt på din maskine.
+
