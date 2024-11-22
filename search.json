@@ -1,5 +1,54 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Aleksander Bang-Larsen",
+    "section": "",
+    "text": "Hej! Jeg hedder Aleksander og studerer statskundskab ved Aarhus Universitet.\nHer på siden har jeg samlet mit cv, beretninger om min teknologiske læring og en række guides til at give noget af min læring videre."
+  },
+  {
+    "objectID": "guides/2024-10-14-introducer-dawar/index.html",
+    "href": "guides/2024-10-14-introducer-dawar/index.html",
+    "title": "Introducerer {dawaR}",
+    "section": "",
+    "text": "Da jeg skulle lære at lave kort i R, lavede jeg et par hurtige googlesøgninger, hvor jeg kom frem til en god guide lavet af Mikkel Freltoft Krogsholm (2021). Jeg opdagede dog hurtigt, at guiden er out-of-date - og derfor skriver jeg denne guide.\nI denne guide vil jeg gennemgå hvordan man kan skabe et kort over alle afstemningssteders områder i Danmark. Vi vil både producere et kort for Aarhus Kommune (Figur 2) og et kort for alle afstemningsområder i hele Danmark (Figur 1)."
+  },
+  {
+    "objectID": "guides/2024-10-14-introducer-dawar/index.html#baggrund",
+    "href": "guides/2024-10-14-introducer-dawar/index.html#baggrund",
+    "title": "Introducerer {dawaR}",
+    "section": "",
+    "text": "Da jeg skulle lære at lave kort i R, lavede jeg et par hurtige googlesøgninger, hvor jeg kom frem til en god guide lavet af Mikkel Freltoft Krogsholm (2021). Jeg opdagede dog hurtigt, at guiden er out-of-date - og derfor skriver jeg denne guide.\nI denne guide vil jeg gennemgå hvordan man kan skabe et kort over alle afstemningssteders områder i Danmark. Vi vil både producere et kort for Aarhus Kommune (Figur 2) og et kort for alle afstemningsområder i hele Danmark (Figur 1)."
+  },
+  {
+    "objectID": "guides/2024-10-14-introducer-dawar/index.html#pakker",
+    "href": "guides/2024-10-14-introducer-dawar/index.html#pakker",
+    "title": "Introducerer {dawaR}",
+    "section": "Pakker",
+    "text": "Pakker\nI R-universet findes der flere pakker til at arbejde med kort. Jeg har valgt at bruge {sf}som den pakke jeg sætter mig ind i, hvad kan. De fleste kan grundlæggende det samme og er bygget op omkring geometry, der er den kolonne (eller variabel) i en dataframe, der indeholder figurerne til kortet.\nFørst indlæser vi alle pakker der skal bruges.\n\nlibrary(tidyverse)      # Her får vi %&gt;%, ggplot2 og andre smarte funktioner.\nlibrary(sf)             # Skal bruges til at arbejde med \"simple features\" (figurer)."
+  },
+  {
+    "objectID": "guides/2024-10-14-introducer-dawar/index.html#data",
+    "href": "guides/2024-10-14-introducer-dawar/index.html#data",
+    "title": "Introducerer {dawaR}",
+    "section": "Data",
+    "text": "Data\nFor at tegne et præcist danmarkskort kan vi hente geojson data fra Klimadatastyrelsen (2024). De udstiller en udmærket API der kan levere kortdata til os. For at vi kan benytte en API i R skal vi først definere et URL og dernæst bede om at downloade den fil der hører til på den hjemmeside.\n\nFørst definerer vi APIens URL.\n\n\n## Gemmer URL til API-kald\nurl &lt;- \"https://api.dataforsyningen.dk/afstemningsomraader?format=geojson\"\n\n\n\nDu behøver ikke at vide hvad en API er for at kunne gennemføre denne guide.\n\nDernæst beder vi R om at downloade den efterspurgte fil til en midlertidig placering i computerens hukommelse.\n\n\n# Skaber midlertidig fil\ngeofile &lt;- tempfile()\n\n# Henter geojson til tempfile\ndownload.file(url, geofile)\n\nVi bruger funktionen download.file() og giver den APIens URL og den midlertidige dataplacering, hvor vi ønsker dataene hentet til.\n\nTil sidst omformer vi geoJSON til et sf format som R kan forstå.\n\n\n# Læser datafilen ind i R\ngeodata_st &lt;- st_read(geofile)\nafstemningssteder_geodata &lt;- st_as_sf(geodata_st)\n\n\n\nHer omformes først til st og dernæst til sf.\nNu har vi en dataframe i afstemningssteder_geodata der indeholder de figurer vi skal bruge for at lave et danmarkskort!\n\nOptimering af data\nFor at vi nemt kan rendere vores plots er det en god ide at gøre figurerne en smule mindre. Især når vi er helt nede på afstemningsstedsniveau. Det er nok ikke så relevant, hvis vi arbejder med kommuner eller landsdele.\n\nafstemningssteder_geodata &lt;- rmapshaper::ms_simplify(afstemningssteder_geodata,\n                                                     keep = 0.01, keep_shapes = TRUE)\n\n\n\nHer indlæser vi rmapshaper::ms_simplify() med pakkens navn for at slippe for at indlæse hele pakken - Vi skal nemlig ikke bruge det hele! Det samme har vi gjort med ggthemes::theme_map() nedenfor, fordi der kun skal bruges det ene theme"
+  },
+  {
+    "objectID": "guides/2024-10-14-introducer-dawar/index.html#visualisering",
+    "href": "guides/2024-10-14-introducer-dawar/index.html#visualisering",
+    "title": "Introducerer {dawaR}",
+    "section": "Visualisering",
+    "text": "Visualisering\nNu kommer vi til den sjove del - At lave selve kortet! Vi skal bruge {ggplot2} fra det velkendte tidyverse, præcis som når vi laver grafer i mange andre sammenhænge.\nVi bruger geom_sf, der er indbygget i {ggplot2} til at tegne de figurer der er opbevaret i vores dataframe. Jeg putter derudover også ggthemes::theme_map() på, fordi jeg ikke synes kort behøver akselinjer og en baggrund. theme_map() er mit klart foretrukne tema til kort.\n\nggplot(afstemningssteder_geodata) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  labs(title = \"Afstemningssteder i Danmark\",\n       caption = \"Kilde: DAWA/DAGI\") +\n  theme(legend.position = \"none\",\n        plot.title = element_text(size = 20),\n        plot.caption = element_text(size = 10))\n\n\n\n\n\n\n\nFigur 1: Kort over alle afstemningsområder i hele Danmark. Kilde og titel tilføjet.\n\n\n\n\n\n\nVisualisering af udsnit\nFor at kun vise de afstemningsområder der ligger i Aarhus Kommune kan vi benytte os af filter() funktionen fra {dplyr} pakken. Med den kan vi filtrere i vores dataframe, så der kun vises afstemningssteder, hvor kommunenavnet er “Aarhus”. Derudover har jeg tilføjet et fill på afstemningsområdets navn for at give hver område sin egen farve.\n\nafstemningssteder_geodata %&gt;%\n  filter(kommunenavn == \"Aarhus\") %&gt;%\n  ggplot(aes(fill = navn)) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\nFigur 2: Kort over alle afstemningsområder i Aarhus Kommune."
+  },
+  {
+    "objectID": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
+    "href": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
+    "title": "Samlet kode til danmarkskort",
+    "section": "",
+    "text": "Herunder er den samlede kode fra guiden til at lave et nemt danmarkskort.\n\nlibrary(tidyverse)      # Her får vi %&gt;%, ggplot2 og andre smarte funktioner.\nlibrary(sf)             # Skal bruges til at arbejde med \"simple features\" (figurer).\n\n## Gemmer URL til API-kald\nurl &lt;- \"https://api.dataforsyningen.dk/afstemningsomraader?format=geojson\"\n\n# Sætter timeout til 10 minutter, fordi afstemingsstederne kan tage lang tid om at hente\noptions(timeout = 600)\n\n# Skaber midlertidig fil\ngeofile &lt;- tempfile()\n\n# Henter geojson til tempfile\ndownload.file(url, geofile)\n\n# Læser datafilen ind i R\ngeodata_st &lt;- st_read(geofile)\nafstemningssteder_geodata &lt;- st_as_sf(geodata_st)\n\n# Simplificerer geodata\nafstemningssteder_geodata &lt;- rmapshaper::ms_simplify(afstemningssteder_geodata,\n                                                     keep = 0.01,\n                                                     keep_shapes = TRUE)\n\n# Skaber danmarkskort\ndanmarkskort &lt;- ggplot(afstemningssteder_geodata) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  labs(title = \"Afstemningssteder i Danmark\",\n       caption = \"Kilde: DAWA/DAGI\") +\n  theme(legend.position = \"none\",\n        plot.title = element_text(size = 20),\n        plot.caption = element_text(size = 10))\n\n# Skaber kort over steder i Aarhus\naarhus_kort &lt;- afstemningssteder_geodata %&gt;%\n  filter(kommunenavn == \"Aarhus\") %&gt;%\n  ggplot(aes(fill = navn)) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  theme(legend.position = \"none\")\n\ndanmarkskort\n\naarhus_kort\n\n# Sætter timout tilbage til 1 minut\noptions(timeout = 60)"
+  },
+  {
     "objectID": "cv.html",
     "href": "cv.html",
     "title": "Aleksander Bang-Larsen",
@@ -25,7 +74,7 @@
     "href": "cv.html#til-nu-underviser-i-excel-og-vba-hos-djøf",
     "title": "Aleksander Bang-Larsen",
     "section": "2023 til nu — Underviser i Excel og VBA hos Djøf",
-    "text": "2023 til nu — Underviser i Excel og VBA hos Djøf\nUnderviser i Excel og VBA for Djøf Studerende, hvor jeg underviser medlemmer af Djøf Studerende i Excel på fire kursusniveauer samt VBA på to niveauer. Her har jeg fået forbedret mine undervisningskompetencer og er blevet bedste venner med Excel."
+    "text": "2023 til nu — Underviser i Excel og VBA hos Djøf\nUnderviser i Excel og VBA for Djøf Studerende, hvor jeg underviser medlemmer af Djøf Studerende i Excel på fire kursusniveauer samt VBA på to niveauer. Her har jeg udviklet mine undervisningskompetencer og er komfortabel med præsentation foran store mængder."
   },
   {
     "objectID": "cv.html#til-2023-student-assistant-hos-eg-as",
@@ -42,25 +91,53 @@
     "text": "2020 til 2021 — Video Editor og ansvarlig for webshops hos Gigantic ApS\nI de første 4 måneder af min ansættelse var mine primære opgaver at redigere reklame-indhold til sociale medier for diverse webshops i virksomheden i Shopify. Herefter fik jeg ansvaret for et af virksomhedens webshop-brands, hvor jeg styrede webshops i Danmark, Sverige, Norge og Finland."
   },
   {
-    "objectID": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
-    "href": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
-    "title": "Samlet kode til danmarkskort",
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
     "section": "",
-    "text": "Herunder er den samlede kode fra guiden til at lave et nemt danmarkskort.\n\nlibrary(tidyverse)      # Her får vi %&gt;%, ggplot2 og andre smarte funktioner.\nlibrary(sf)             # Skal bruges til at arbejde med \"simple features\" (figurer).\n\n## Gemmer URL til API-kald\nurl &lt;- \"https://api.dataforsyningen.dk/afstemningsomraader?format=geojson\"\n\n# Sætter timeout til 10 minutter, fordi afstemingsstederne kan tage lang tid om at hente\noptions(timeout = 600)\n\n# Skaber midlertidig fil\ngeofile &lt;- tempfile()\n\n# Henter geojson til tempfile\ndownload.file(url, geofile)\n\n# Læser datafilen ind i R\ngeodata_st &lt;- st_read(geofile)\nafstemningssteder_geodata &lt;- st_as_sf(geodata_st)\n\n# Simplificerer geodata\nafstemningssteder_geodata &lt;- rmapshaper::ms_simplify(afstemningssteder_geodata,\n                                                     keep = 0.01,\n                                                     keep_shapes = TRUE)\n\n# Skaber danmarkskort\ndanmarkskort &lt;- ggplot(afstemningssteder_geodata) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  labs(title = \"Afstemningssteder i Danmark\",\n       caption = \"Kilde: DAWA/DAGI\") +\n  theme(legend.position = \"none\",\n        plot.title = element_text(size = 20),\n        plot.caption = element_text(size = 10))\n\n# Skaber kort over steder i Aarhus\naarhus_kort &lt;- afstemningssteder_geodata %&gt;%\n  filter(kommunenavn == \"Aarhus\") %&gt;%\n  ggplot(aes(fill = navn)) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  theme(legend.position = \"none\")\n\ndanmarkskort\n\naarhus_kort\n\n# Sætter timout tilbage til 1 minut\noptions(timeout = 60)"
+    "text": "Denne guide er beregnet til dig, der er interesseret i, hvordan man installerer et custom output i Zotero. Måske er du blevet henvist hertil er blevet vist hertil og har fået tilsendt mit speciallavede politica-output til Zotero. Her vil du finde vejledning til, hvordan du importerer og bruger den med dine henvisninger.\nDenne guide tager udgangspunkt i, at du allerede har Zotero 6 installeret. Du kan downloade Zotero på programmets hjemmeside."
   },
   {
-    "objectID": "guides.html",
-    "href": "guides.html",
-    "title": "Guides",
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#baggrund",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#baggrund",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
     "section": "",
-    "text": "Sorter ved\n       Standard\n         \n          Overskrift\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nNemt Danmarkskort i R\n\n\n\n\n\n\n\n\n\n\nIngen resultater"
+    "text": "Denne guide er beregnet til dig, der er interesseret i, hvordan man installerer et custom output i Zotero. Måske er du blevet henvist hertil er blevet vist hertil og har fået tilsendt mit speciallavede politica-output til Zotero. Her vil du finde vejledning til, hvordan du importerer og bruger den med dine henvisninger.\nDenne guide tager udgangspunkt i, at du allerede har Zotero 6 installeret. Du kan downloade Zotero på programmets hjemmeside."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Aleksander Bang-Larsen",
-    "section": "",
-    "text": "Hej! Jeg hedder Aleksander og studerer statskundskab ved Aarhus Universitet.\nHer på siden har jeg samlet mit cv, beretninger om min teknologiske læring og en række guides til at give noget af min læring videre."
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#ting-du-skal-igennem",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#ting-du-skal-igennem",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
+    "section": "Ting du skal igennem",
+    "text": "Ting du skal igennem\n\nDownloade csl filer og placere et smart sted (f.eks. sammen med zotero)\nInstallere output-formatet\nVælge det som default output\nBruge output i word"
+  },
+  {
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#download-og-placering-af-csl-filer",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#download-og-placering-af-csl-filer",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
+    "section": "Download og placering af csl-filer",
+    "text": "Download og placering af csl-filer\nDu skal sørge for, at filerne ligger et sted, hvor du kan finde dem. Jeg har mine til at ligge i OneDrive sammen med mine andre dokumenter.\n\n\n\n\n\nDe to filer der skal gemmes\n\n\nHvis du ikke allerede har fået tilsendt csl filerne, kan du hente dem ude til højre.\n\nHvad er forskellen på politica og politica-w-ibid?\npolitica.csl er den stil du skal bruge, hvis du ikke ønsker at Zotero laver ibid automatisk eller du ønsker manuelt at skrive ibid. politica-w-ibid.csl er den stil du skal bruge, hvis du ønsker at Zotero automatisk indsætter ibid når du bruger den samme reference to gange i træk; og tæt på hinanden."
+  },
+  {
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#installation-af-output",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#installation-af-output",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
+    "section": "Installation af output",
+    "text": "Installation af output\nFor at installere output-stilen skal du blot dobbeltklikke på csl filen på dit drev. Så får du denne besked op:\n\n\n\nSådan skal det se ud, når du prøver at installere output\n\n\nHer skal du trykke Install og så vil stilen automatisk installeres. Det skal du gentage for alle de output-stiler du vil installere.\n\n\nHint: Du kan tjekke de output-stiler der er installeret ved at gå i Settings og under Cite er alle tilgængelige output-stile listet."
+  },
+  {
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#brug-af-output",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#brug-af-output",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
+    "section": "Brug af output",
+    "text": "Brug af output\nFor at du kan bruge din output-stil skal du have nogle referencer klar i Zotero. Jeg har valgt nedenstående:\n\nTogeby (2003)\nMouritsen (2009)\nMidtgaard (2011)\nPetersen et al. (2007)\nBush (2008)\n\nI bunden af denne side kan du se en litteraturliste med disse henvisninger i fuld format - Og der kan du også se om output-stilen stemmer overens med Politicas skrivevejledning.\n\nWord"
+  },
+  {
+    "objectID": "guides/2024-05-17-installer-output-zotero/index.html#faq",
+    "href": "guides/2024-05-17-installer-output-zotero/index.html#faq",
+    "title": "Sådan installerer du et nyt output-format i Zotero",
+    "section": "FAQ",
+    "text": "FAQ\n\nJeg har fundet en fejl i outputtet - Hvad gør jeg?\n\nHvis du har fundet en fejl i en af de styles jeg har produceret kan du sende mig en mail eller tage fat på mig IRL eller på diverse sociale medier.\nHvis der er tale om en fejlimplementering i forhold til skrivevejledningen fra politica retter jeg den med glæde.\n\nEllers kan vi tale om at producere en stil der passer til dine ønsker.\n\nNår du kontakter mig vedrørende en fejl er det en god ide at sende din csl-fil med; det gør det nemlig nememre at finde ud af, hvad fejlen er og hvor den findes.\n\n\n\nHvorfor kan jeg ikke bare downloade output-stilen inde i Zotero som man kan med andre?\n\nJeg arbejder på at få denne output-stil integreret i den primære downloadside, men det kræver at CSL-projektet vil acceptere den. Du kan læse mere om, hvad det kræver her. Du kan også følge med i processen her."
   },
   {
     "objectID": "guides/2024-06-29-danmarkskort-i-r/index.html",
@@ -103,5 +180,12 @@
     "title": "Nemt Danmarkskort i R",
     "section": "Samlet kode",
     "text": "Samlet kode\nAlt hvad jeg har gennemgået i denne guide kan findes i et samlet r-script på min github. Den kan også findes her på hjemmesiden."
+  },
+  {
+    "objectID": "guides.html",
+    "href": "guides.html",
+    "title": "Guides",
+    "section": "",
+    "text": "Sorter ved\n       Standard\n         \n          Overskrift\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\nIntroducerer {dawaR}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNemt Danmarkskort i R\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSådan installerer du et nyt output-format i Zotero\n\n\nEn kort guide til installation af Politica output format\n\n\n\n\n\n\n\nIngen resultater"
   }
 ]

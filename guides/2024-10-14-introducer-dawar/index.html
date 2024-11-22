@@ -8,7 +8,7 @@
 
 <meta name="author" content="Aleksander Bang-Larsen">
 
-<title>Nemt Danmarkskort i R – Aleksander Bang-Larsen</title>
+<title>Introducerer {dawaR} – Aleksander Bang-Larsen</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,7 +127,7 @@ div.csl-indent {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<meta property="og:title" content="Nemt Danmarkskort i R – Aleksander Bang-Larsen">
+<meta property="og:title" content="Introducerer {dawaR} – Aleksander Bang-Larsen">
 <meta property="og:description" content="">
 <meta property="og:site_name" content="Aleksander Bang-Larsen">
 </head>
@@ -199,7 +199,7 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Nemt Danmarkskort i R</h1>
+      <h1 class="title">Introducerer <code>{dawaR}</code></h1>
                       </div>
   </div>
     
@@ -216,7 +216,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Udgivet</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">29. juni 2024</p>
+        <p class="date">22. november 2024</p>
       </div>
     </div>
     
@@ -242,9 +242,8 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#visualisering-af-udsnit" id="toc-visualisering-af-udsnit" class="nav-link" data-scroll-target="#visualisering-af-udsnit">Visualisering af udsnit</a></li>
   </ul></li>
-  <li><a href="#samlet-kode" id="toc-samlet-kode" class="nav-link" data-scroll-target="#samlet-kode">Samlet kode</a></li>
   </ul>
-<div class="quarto-other-links"><h2>Andre links</h2><ul><li><a href="https://github.com/aleksanderbl29/aleksanderbldk/blob/main/guides/2024-06-29-danmarkskort-i-r/kort.r"><i class="bi bi-code"></i>Samlet script</a></li><li><a href="https://www.linkedin.com/pulse/easy-maps-denmark-r-mikkel-freltoft-krogsholm/"><i class="bi bi-link-45deg"></i>Mikkel Krogsholms guide</a></li></ul></div></nav>
+<div class="quarto-other-links"><h2>Andre links</h2><ul><li><a href="https://dawar.aleksanderbl.dk"><i class="bi bi-book"></i>Dokumentation</a></li><li><a href="https://github.com/aleksanderbl29/dawaR"><i class="bi bi-github"></i>Github</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
@@ -269,7 +268,7 @@ div.csl-indent {
 </section>
 <section id="data" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>For at tegne et præcist danmarkskort kan vi hente <code>geojson</code> data fra <span class="citation" data-cites="apidawa2024">Styrelsen for Dataforsyning og Infrastruktur (<a href="#ref-apidawa2024" role="doc-biblioref">2024</a>)</span>. De udstiller en udmærket <code>API</code> der kan levere kortdata til os. For at vi kan benytte en <code>API</code> i <code>R</code> skal vi først definere et <code>URL</code> og dernæst bede om at downloade den fil der hører til på den hjemmeside.</p>
+<p>For at tegne et præcist danmarkskort kan vi hente <code>geojson</code> data fra <span class="citation" data-cites="apidawa">Klimadatastyrelsen (<a href="#ref-apidawa" role="doc-biblioref">2024</a>)</span>. De udstiller en udmærket <code>API</code> der kan levere kortdata til os. For at vi kan benytte en <code>API</code> i <code>R</code> skal vi først definere et <code>URL</code> og dernæst bede om at downloade den fil der hører til på den hjemmeside.</p>
 <ol type="1">
 <li>Først definerer vi <code>API</code>ens <code>URL</code>.</li>
 </ol>
@@ -364,33 +363,29 @@ Figur&nbsp;2: Kort over alle afstemningsområder i Aarhus Kommune.
 </div>
 </div>
 </div>
+
+
+
 </section>
-</section>
-<section id="samlet-kode" class="level2">
-<h2 class="anchored" data-anchor-id="samlet-kode">Samlet kode</h2>
-<p>Alt hvad jeg har gennemgået i denne guide kan findes i et samlet <code>r</code>-script <a href="https://github.com/aleksanderbl29/aleksanderbldk/blob/main/guides/2024-06-29-danmarkskort-i-r/kort.r">på min github</a>. Den kan også findes <a href="../../guides/2024-06-29-danmarkskort-i-r/kort-kode.html">her på hjemmesiden</a>.</p>
-
-
-
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencer</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-apidawa" class="csl-entry" role="listitem">
+Klimadatastyrelsen. 2024. <span>“<span>DAWA</span>: <span>Danmarks Adressers Web API</span> at <span>Dataforsyningen</span> - Through <span>dawaR</span>”</span>. <a href="https://dawadocs.dataforsyningen.dk/dok/guides">https://dawadocs.dataforsyningen.dk/dok/guides</a>.
+</div>
 <div id="ref-krogsholm2021" class="csl-entry" role="listitem">
 Krogsholm, Mikkel Freltoft. 2021. <span>“Easy Maps of <span>Denmark</span> in <span>R</span> <span></span> <span>LinkedIn</span>”</span>. https://www.linkedin.com/pulse/easy-maps-denmark-r-mikkel-freltoft-krogsholm/.
 </div>
-<div id="ref-apidawa2024" class="csl-entry" role="listitem">
-Styrelsen for Dataforsyning og Infrastruktur. 2024. <span>“<span>DAWA</span>: <span>Danmarks Adressers Web API</span> Hos <span>Dataforsyningen</span>”</span>. https://dawadocs.dataforsyningen.dk/dok/guides.
-</div>
 </div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citat</h2><div><div class="quarto-appendix-secondary-label">Henvis til denne guide som:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bang-larsen2024,
   author = {Bang-Larsen, Aleksander},
-  title = {Nemt Danmarkskort i R},
-  date = {2024-06-29},
-  url = {https://aleksanderbl.dk/guides/2024-05-19-danmarkskort-i-r},
+  title = {Introducerer `\{dawaR\}`},
+  date = {2024-11-22},
+  url = {https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar},
   langid = {da}
 }
 </code><button title="Kopier til udklipsholder" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">BibTeX henvisning:</div><div id="ref-bang-larsen2024" class="csl-entry quarto-appendix-citeas" role="listitem">
-Bang-Larsen, Aleksander. 2024. <span>“Nemt Danmarkskort i R.”</span>
-June 29, 2024. <a href="https://aleksanderbl.dk/guides/2024-05-19-danmarkskort-i-r">https://aleksanderbl.dk/guides/2024-05-19-danmarkskort-i-r</a>.
+Bang-Larsen, Aleksander. 2024. <span>“Introducerer `{dawaR}`.”</span>
+November 22, 2024. <a href="https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar">https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
