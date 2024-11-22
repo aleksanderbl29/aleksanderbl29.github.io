@@ -14,268 +14,146 @@
 <item>
   <title>Introducerer {dawaR}</title>
   <dc:creator>Aleksander Bang-Larsen</dc:creator>
-  <link>https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar/</link>
+  <link>https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/</link>
   <description><![CDATA[ 
 
 
 
 
 
-<section id="baggrund" class="level2">
-<h2 class="anchored" data-anchor-id="baggrund">Baggrund</h2>
-<p>Da jeg skulle lære at lave kort i R, lavede jeg et par hurtige googlesøgninger, hvor jeg kom frem til en god guide lavet af Mikkel Freltoft <span class="citation" data-cites="krogsholm2021">Krogsholm (2021)</span>. Jeg opdagede dog hurtigt, at guiden er out-of-date - og derfor skriver jeg denne guide.</p>
-<p>I denne guide vil jeg gennemgå hvordan man kan skabe et kort over alle afstemningssteders områder i Danmark. Vi vil både producere et kort for Aarhus Kommune (Figur&nbsp;2) og et kort for alle afstemningsområder i hele Danmark (Figur&nbsp;1).</p>
+<p>Jeg har for nyligt offentliggjort min pakke <code>{dawaR}</code> der også er publiceret på <a href="https://CRAN.R-project.org/package=dawaR">CRAN</a>.</p>
+<section id="hvad-skal-jeg-bruge-pakken-til" class="level1">
+<h1>Hvad skal jeg bruge pakken til?</h1>
+<p>Jeg lavede denne pakke fordi jeg blev træt af manuelt at interagere med Danmarks Adressers Web API når jeg skal lave kort og andre geospatiale opgaver. Det løser <code>{dawaR}</code>!</p>
 </section>
-<section id="pakker" class="level2">
-<h2 class="anchored" data-anchor-id="pakker">Pakker</h2>
-<p>I R-universet findes der flere pakker til at arbejde med kort. Jeg har valgt at bruge <code>{sf}</code>som den pakke jeg sætter mig ind i, hvad kan. De fleste kan grundlæggende det samme og er bygget op omkring <code>geometry</code>, der er den kolonne (eller variabel) i en dataframe, der indeholder figurerne til kortet.</p>
-<p>Først indlæser vi alle pakker der skal bruges.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Her får vi %&gt;%, ggplot2 og andre smarte funktioner.</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(sf)             <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Skal bruges til at arbejde med "simple features" (figurer).</span></span></code></pre></div>
-</div>
+<section id="primære-funktioner" class="level1 page-columns page-full">
+<h1>Primære funktioner</h1>
+<p><code>{dawaR}</code> har 4 primære funktioner:</p>
+<ul>
+<li><code>dawaR::get_data()</code></li>
+<li><code>dawaR::get_map_data()</code></li>
+<li><code>dawaR::autocomplete()</code></li>
+<li><code>dawaR::reverse()</code></li>
+</ul>
+<section id="get_data" class="level2">
+<h2 class="anchored" data-anchor-id="get_data"><code>get_data()</code></h2>
+<p><code>dawaR::get_data()</code> kan bruges til at hente data i ikke-geografisk format fra API’en. Det er brugtbart hvis man blot skal bruge alle kommuners officielle navne eller sammenlægge afstemningssteder eller sogne til den tilhørende politikreds, for blot at nævne et par stykker.</p>
 </section>
-<section id="data" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>For at tegne et præcist danmarkskort kan vi hente <code>geojson</code> data fra <span class="citation" data-cites="apidawa">Klimadatastyrelsen (2024)</span>. De udstiller en udmærket <code>API</code> der kan levere kortdata til os. For at vi kan benytte en <code>API</code> i <code>R</code> skal vi først definere et <code>URL</code> og dernæst bede om at downloade den fil der hører til på den hjemmeside.</p>
-<ol type="1">
-<li>Først definerer vi <code>API</code>ens <code>URL</code>.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">## Gemmer URL til API-kald</span></span>
-<span id="cb2-2">url <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://api.dataforsyningen.dk/afstemningsomraader?format=geojson"</span></span></code></pre></div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Du behøver <em>ikke</em> at vide hvad en <code>API</code> er for at kunne gennemføre denne guide.</p>
-</div></div><ol start="2" type="1">
-<li>Dernæst beder vi <code>R</code> om at downloade den efterspurgte fil til en midlertidig placering i computerens hukommelse.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Skaber midlertidig fil</span></span>
-<span id="cb3-2">geofile <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tempfile</span>()</span>
-<span id="cb3-3"></span>
-<span id="cb3-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Henter geojson til tempfile</span></span>
-<span id="cb3-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">download.file</span>(url, geofile)</span></code></pre></div>
-</div>
-<p>Vi bruger funktionen <code>download.file()</code> og giver den <code>API</code>ens <code>URL</code> og den midlertidige dataplacering, hvor vi ønsker dataene hentet til.</p>
-<ol start="3" type="1">
-<li>Til sidst omformer vi <code>geoJSON</code> til et <code>sf</code> format som <code>R</code> kan forstå.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Læser datafilen ind i R</span></span>
-<span id="cb4-2">geodata_st <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">st_read</span>(geofile)</span>
-<span id="cb4-3">afstemningssteder_geodata <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">st_as_sf</span>(geodata_st)</span></code></pre></div>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Her omformes først til <code>st</code> og dernæst til <code>sf</code>.</p>
-</div></div><p>Nu har vi en dataframe i <code>afstemningssteder_geodata</code> der indeholder de figurer vi skal bruge for at lave et danmarkskort!</p>
-<section id="optimering-af-data" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="optimering-af-data">Optimering af data</h3>
-<p>For at vi nemt kan rendere vores plots er det en god ide at gøre figurerne en smule mindre. <em>Især</em> når vi er helt nede på afstemningsstedsniveau. Det er nok ikke så relevant, hvis vi arbejder med kommuner eller landsdele.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">afstemningssteder_geodata <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> rmapshaper<span class="sc" style="color: #5E5E5E;
+<section id="get_map_data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="get_map_data"><code>get_map_data()</code></h2>
+<p><code>dawaR::get_map_data()</code> returnerer et <code>{sf}</code> objekt med multipolygoner der er klar til at blive plottet med <code>ggplot2::geom_sf()</code>. Det kan du læse mere om <a href="https://dawar.aleksanderbl.dk/articles/printing_maps.html">på pakkens hjemmeside</a>. <code>get_map_data()</code> kan også bruges hvis du skal hente data til et geografisk projekt, men gerne vil slippe for at omformatere koordinater til polygoner og håndtere et <a href="https://en.wikipedia.org/wiki/Spatial_reference_system">crs</a> - Den gør det hele for dig.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">dawaR<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">ms_simplify</span>(afstemningssteder_geodata,</span>
-<span id="cb5-2">                                                     <span class="at" style="color: #657422;
+font-style: inherit;">get_map_data</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">keep =</span> <span class="fl" style="color: #AD0000;
+font-style: inherit;">"regioner"</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">0.01</span>, <span class="at" style="color: #657422;
+font-style: inherit;">|&gt;</span> ggplot2<span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">keep_shapes =</span> <span class="cn" style="color: #8f5902;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
-</div>
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> ggplot2<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> ggplot2<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>()</span></code></pre></div>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
-<p>Her indlæser vi <code>rmapshaper::ms_simplify()</code> med pakkens navn for at slippe for at indlæse hele pakken - Vi skal nemlig ikke bruge det hele! Det samme har vi gjort med <code>ggthemes::theme_map()</code> nedenfor, fordi der kun skal bruges det ene <em>theme</em></p>
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Hurtigt kort over de danske regioner</figcaption>
+</figure>
+</div>
+</div></div></div>
+</section>
+<section id="autocomplete" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="autocomplete"><code>autocomplete()</code></h2>
+<p><code>dawaR::autocomplete()</code> bruges til at autocomplete adresser eller navne på steder. Du kan den et input og den <em>sektion</em> der skal søges i, f.eks.:</p>
+
+<div class="no-row-height column-margin column-container"><div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">dawaR<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">autocomplete</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"regioner"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"midt"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[[1]]$tekst
+[1] "1082 Region Midtjylland"
+
+[[1]]$region
+[[1]]$region$ændret
+[1] "2024-10-11T21:03:05.131Z"
+
+[[1]]$region$geo_version
+[1] 43
+
+[[1]]$region$geo_ændret
+[1] "2024-10-11T21:03:05.131Z"
+
+[[1]]$region$bbox
+[[1]]$region$bbox[[1]]
+[1] 8.078876
+
+[[1]]$region$bbox[[2]]
+[1] 55.64438
+
+[[1]]$region$bbox[[3]]
+[1] 11.66419
+
+[[1]]$region$bbox[[4]]
+[1] 56.84326
+
+
+[[1]]$region$visueltcenter
+[[1]]$region$visueltcenter[[1]]
+[1] 9.605032
+
+[[1]]$region$visueltcenter[[2]]
+[1] 56.23399
+
+
+[[1]]$region$dagi_id
+[1] "389101"
+
+[[1]]$region$kode
+[1] "1082"
+
+[[1]]$region$navn
+[1] "Region Midtjylland"
+
+[[1]]$region$nuts2
+[1] "DK04"
+
+[[1]]$region$href
+[1] "https://api.dataforsyningen.dk/regioner/1082"</code></pre>
+</div>
 </div></div></section>
-</section>
-<section id="visualisering" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="visualisering">Visualisering</h2>
-<p>Nu kommer vi til den sjove del - At lave selve kortet! Vi skal bruge <code>{ggplot2}</code> fra det velkendte <em>tidyverse</em>, præcis som når vi laver grafer i mange andre sammenhænge.</p>
-<p>Vi bruger <code>geom_sf</code>, der er indbygget i <code>{ggplot2}</code> til at tegne de figurer der er opbevaret i vores dataframe. Jeg putter derudover også <code>ggthemes::theme_map()</code> på, fordi jeg ikke synes kort behøver akselinjer og en baggrund. <code>theme_map()</code> er mit klart foretrukne tema til kort.</p>
-<div class="cell page-columns page-full">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(afstemningssteder_geodata) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_sf</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-3">  ggthemes<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme_map</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Afstemningssteder i Danmark"</span>,</span>
-<span id="cb6-5">       <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">caption =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Kilde: DAWA/DAGI"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-6">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">legend.position =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"none"</span>,</span>
-<span id="cb6-7">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">plot.title =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>),</span>
-<span id="cb6-8">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">plot.caption =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">element_text</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>))</span></code></pre></div>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-dk" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
-<div aria-describedby="fig-dk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar/index_files/figure-html/fig-dk-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-dk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figur&nbsp;1: Kort over alle afstemningsområder i hele Danmark. Kilde og titel tilføjet.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="visualisering-af-udsnit" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="visualisering-af-udsnit">Visualisering af udsnit</h3>
-<p>For at kun vise de afstemningsområder der ligger i Aarhus Kommune kan vi benytte os af <code>filter()</code> funktionen fra <code>{dplyr}</code> pakken. Med den kan vi filtrere i vores dataframe, så der kun vises afstemningssteder, hvor kommunenavnet er “Aarhus”. Derudover har jeg tilføjet et <code>fill</code> på afstemningsområdets navn for at give hver område sin egen farve.</p>
-<div class="cell page-columns page-full">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">afstemningssteder_geodata <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb7-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(kommunenavn <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Aarhus"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb7-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> navn)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb7-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_sf</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb7-5">  ggthemes<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme_map</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb7-6">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">legend.position =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"none"</span>)</span></code></pre></div>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-aarhus" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="quarto-float quarto-float-fig figure page-columns page-full">
-<div aria-describedby="fig-aarhus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar/index_files/figure-html/fig-aarhus-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-aarhus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figur&nbsp;2: Kort over alle afstemningsområder i Aarhus Kommune.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-
+<section id="reverse" class="level2">
+<h2 class="anchored" data-anchor-id="reverse"><code>reverse()</code></h2>
+<p><code>dawaR::reverse()</code> bruges til at reverse-geokode koordinater til et geografisk område. Dette kan også gøres med <code>{sf}</code> pakken, men i <code>reverse()</code> slås der direkte op i det officielle register i stedet for at lave udregningen lokalt på din maskine.</p>
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencer</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-apidawa" class="csl-entry">
-Klimadatastyrelsen. 2024. <span>“<span>DAWA</span>: <span>Danmarks Adressers Web API</span> at <span>Dataforsyningen</span> - Through <span>dawaR</span>”</span>. <a href="https://dawadocs.dataforsyningen.dk/dok/guides">https://dawadocs.dataforsyningen.dk/dok/guides</a>.
-</div>
-<div id="ref-krogsholm2021" class="csl-entry">
-Krogsholm, Mikkel Freltoft. 2021. <span>“Easy Maps of <span>Denmark</span> in <span>R</span> <span></span> <span>LinkedIn</span>”</span>. https://www.linkedin.com/pulse/easy-maps-denmark-r-mikkel-freltoft-krogsholm/.
-</div>
-</div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citat</h2><div><div class="quarto-appendix-secondary-label">Henvis til denne guide som:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bang-larsen2024,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citat</h2><div><div class="quarto-appendix-secondary-label">Henvis til denne guide som:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{bang-larsen2024,
   author = {Bang-Larsen, Aleksander},
   title = {Introducerer `\{dawaR\}`},
   date = {2024-11-22},
@@ -286,7 +164,7 @@ Krogsholm, Mikkel Freltoft. 2021. <span>“Easy Maps of <span>Denmark</span> in 
 Bang-Larsen, Aleksander. 2024. <span>“Introducerer `{dawaR}`.”</span>
 November 22, 2024. <a href="https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar">https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar</a>.
 </div></div></section></div> ]]></description>
-  <guid>https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar/</guid>
+  <guid>https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/</guid>
   <pubDate>Fri, 22 Nov 2024 00:00:00 GMT</pubDate>
 </item>
 <item>

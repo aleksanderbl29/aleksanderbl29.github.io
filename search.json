@@ -7,39 +7,39 @@
     "text": "Hej! Jeg hedder Aleksander og studerer statskundskab ved Aarhus Universitet.\nHer på siden har jeg samlet mit cv, beretninger om min teknologiske læring og en række guides til at give noget af min læring videre."
   },
   {
-    "objectID": "guides/2024-10-14-introducer-dawar/index.html",
-    "href": "guides/2024-10-14-introducer-dawar/index.html",
+    "objectID": "guides/2024-11-22-introducer-dawar/index.html",
+    "href": "guides/2024-11-22-introducer-dawar/index.html",
     "title": "Introducerer {dawaR}",
     "section": "",
-    "text": "Da jeg skulle lære at lave kort i R, lavede jeg et par hurtige googlesøgninger, hvor jeg kom frem til en god guide lavet af Mikkel Freltoft Krogsholm (2021). Jeg opdagede dog hurtigt, at guiden er out-of-date - og derfor skriver jeg denne guide.\nI denne guide vil jeg gennemgå hvordan man kan skabe et kort over alle afstemningssteders områder i Danmark. Vi vil både producere et kort for Aarhus Kommune (Figur 2) og et kort for alle afstemningsområder i hele Danmark (Figur 1)."
+    "text": "Jeg har for nyligt offentliggjort min pakke {dawaR} der også er publiceret på CRAN."
   },
   {
-    "objectID": "guides/2024-10-14-introducer-dawar/index.html#baggrund",
-    "href": "guides/2024-10-14-introducer-dawar/index.html#baggrund",
+    "objectID": "guides/2024-11-22-introducer-dawar/index.html#get_data",
+    "href": "guides/2024-11-22-introducer-dawar/index.html#get_data",
     "title": "Introducerer {dawaR}",
-    "section": "",
-    "text": "Da jeg skulle lære at lave kort i R, lavede jeg et par hurtige googlesøgninger, hvor jeg kom frem til en god guide lavet af Mikkel Freltoft Krogsholm (2021). Jeg opdagede dog hurtigt, at guiden er out-of-date - og derfor skriver jeg denne guide.\nI denne guide vil jeg gennemgå hvordan man kan skabe et kort over alle afstemningssteders områder i Danmark. Vi vil både producere et kort for Aarhus Kommune (Figur 2) og et kort for alle afstemningsområder i hele Danmark (Figur 1)."
+    "section": "get_data()",
+    "text": "get_data()\ndawaR::get_data() kan bruges til at hente data i ikke-geografisk format fra API’en. Det er brugtbart hvis man blot skal bruge alle kommuners officielle navne eller sammenlægge afstemningssteder eller sogne til den tilhørende politikreds, for blot at nævne et par stykker."
   },
   {
-    "objectID": "guides/2024-10-14-introducer-dawar/index.html#pakker",
-    "href": "guides/2024-10-14-introducer-dawar/index.html#pakker",
+    "objectID": "guides/2024-11-22-introducer-dawar/index.html#get_map_data",
+    "href": "guides/2024-11-22-introducer-dawar/index.html#get_map_data",
     "title": "Introducerer {dawaR}",
-    "section": "Pakker",
-    "text": "Pakker\nI R-universet findes der flere pakker til at arbejde med kort. Jeg har valgt at bruge {sf}som den pakke jeg sætter mig ind i, hvad kan. De fleste kan grundlæggende det samme og er bygget op omkring geometry, der er den kolonne (eller variabel) i en dataframe, der indeholder figurerne til kortet.\nFørst indlæser vi alle pakker der skal bruges.\n\nlibrary(tidyverse)      # Her får vi %&gt;%, ggplot2 og andre smarte funktioner.\nlibrary(sf)             # Skal bruges til at arbejde med \"simple features\" (figurer)."
+    "section": "get_map_data()",
+    "text": "get_map_data()\ndawaR::get_map_data() returnerer et {sf} objekt med multipolygoner der er klar til at blive plottet med ggplot2::geom_sf(). Det kan du læse mere om på pakkens hjemmeside. get_map_data() kan også bruges hvis du skal hente data til et geografisk projekt, men gerne vil slippe for at omformatere koordinater til polygoner og håndtere et crs - Den gør det hele for dig.\n\ndawaR::get_map_data(\"regioner\") |&gt; ggplot2::ggplot() + ggplot2::geom_sf() + ggplot2::theme_void()\n\n\n\n\n\nHurtigt kort over de danske regioner"
   },
   {
-    "objectID": "guides/2024-10-14-introducer-dawar/index.html#data",
-    "href": "guides/2024-10-14-introducer-dawar/index.html#data",
+    "objectID": "guides/2024-11-22-introducer-dawar/index.html#autocomplete",
+    "href": "guides/2024-11-22-introducer-dawar/index.html#autocomplete",
     "title": "Introducerer {dawaR}",
-    "section": "Data",
-    "text": "Data\nFor at tegne et præcist danmarkskort kan vi hente geojson data fra Klimadatastyrelsen (2024). De udstiller en udmærket API der kan levere kortdata til os. For at vi kan benytte en API i R skal vi først definere et URL og dernæst bede om at downloade den fil der hører til på den hjemmeside.\n\nFørst definerer vi APIens URL.\n\n\n## Gemmer URL til API-kald\nurl &lt;- \"https://api.dataforsyningen.dk/afstemningsomraader?format=geojson\"\n\n\n\nDu behøver ikke at vide hvad en API er for at kunne gennemføre denne guide.\n\nDernæst beder vi R om at downloade den efterspurgte fil til en midlertidig placering i computerens hukommelse.\n\n\n# Skaber midlertidig fil\ngeofile &lt;- tempfile()\n\n# Henter geojson til tempfile\ndownload.file(url, geofile)\n\nVi bruger funktionen download.file() og giver den APIens URL og den midlertidige dataplacering, hvor vi ønsker dataene hentet til.\n\nTil sidst omformer vi geoJSON til et sf format som R kan forstå.\n\n\n# Læser datafilen ind i R\ngeodata_st &lt;- st_read(geofile)\nafstemningssteder_geodata &lt;- st_as_sf(geodata_st)\n\n\n\nHer omformes først til st og dernæst til sf.\nNu har vi en dataframe i afstemningssteder_geodata der indeholder de figurer vi skal bruge for at lave et danmarkskort!\n\nOptimering af data\nFor at vi nemt kan rendere vores plots er det en god ide at gøre figurerne en smule mindre. Især når vi er helt nede på afstemningsstedsniveau. Det er nok ikke så relevant, hvis vi arbejder med kommuner eller landsdele.\n\nafstemningssteder_geodata &lt;- rmapshaper::ms_simplify(afstemningssteder_geodata,\n                                                     keep = 0.01, keep_shapes = TRUE)\n\n\n\nHer indlæser vi rmapshaper::ms_simplify() med pakkens navn for at slippe for at indlæse hele pakken - Vi skal nemlig ikke bruge det hele! Det samme har vi gjort med ggthemes::theme_map() nedenfor, fordi der kun skal bruges det ene theme"
+    "section": "autocomplete()",
+    "text": "autocomplete()\ndawaR::autocomplete() bruges til at autocomplete adresser eller navne på steder. Du kan den et input og den sektion der skal søges i, f.eks.:\n\n\ndawaR::autocomplete(\"regioner\", \"midt\")\n\n[[1]]\n[[1]]$tekst\n[1] \"1082 Region Midtjylland\"\n\n[[1]]$region\n[[1]]$region$ændret\n[1] \"2024-10-11T21:03:05.131Z\"\n\n[[1]]$region$geo_version\n[1] 43\n\n[[1]]$region$geo_ændret\n[1] \"2024-10-11T21:03:05.131Z\"\n\n[[1]]$region$bbox\n[[1]]$region$bbox[[1]]\n[1] 8.078876\n\n[[1]]$region$bbox[[2]]\n[1] 55.64438\n\n[[1]]$region$bbox[[3]]\n[1] 11.66419\n\n[[1]]$region$bbox[[4]]\n[1] 56.84326\n\n\n[[1]]$region$visueltcenter\n[[1]]$region$visueltcenter[[1]]\n[1] 9.605032\n\n[[1]]$region$visueltcenter[[2]]\n[1] 56.23399\n\n\n[[1]]$region$dagi_id\n[1] \"389101\"\n\n[[1]]$region$kode\n[1] \"1082\"\n\n[[1]]$region$navn\n[1] \"Region Midtjylland\"\n\n[[1]]$region$nuts2\n[1] \"DK04\"\n\n[[1]]$region$href\n[1] \"https://api.dataforsyningen.dk/regioner/1082\""
   },
   {
-    "objectID": "guides/2024-10-14-introducer-dawar/index.html#visualisering",
-    "href": "guides/2024-10-14-introducer-dawar/index.html#visualisering",
+    "objectID": "guides/2024-11-22-introducer-dawar/index.html#reverse",
+    "href": "guides/2024-11-22-introducer-dawar/index.html#reverse",
     "title": "Introducerer {dawaR}",
-    "section": "Visualisering",
-    "text": "Visualisering\nNu kommer vi til den sjove del - At lave selve kortet! Vi skal bruge {ggplot2} fra det velkendte tidyverse, præcis som når vi laver grafer i mange andre sammenhænge.\nVi bruger geom_sf, der er indbygget i {ggplot2} til at tegne de figurer der er opbevaret i vores dataframe. Jeg putter derudover også ggthemes::theme_map() på, fordi jeg ikke synes kort behøver akselinjer og en baggrund. theme_map() er mit klart foretrukne tema til kort.\n\nggplot(afstemningssteder_geodata) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  labs(title = \"Afstemningssteder i Danmark\",\n       caption = \"Kilde: DAWA/DAGI\") +\n  theme(legend.position = \"none\",\n        plot.title = element_text(size = 20),\n        plot.caption = element_text(size = 10))\n\n\n\n\n\n\n\nFigur 1: Kort over alle afstemningsområder i hele Danmark. Kilde og titel tilføjet.\n\n\n\n\n\n\nVisualisering af udsnit\nFor at kun vise de afstemningsområder der ligger i Aarhus Kommune kan vi benytte os af filter() funktionen fra {dplyr} pakken. Med den kan vi filtrere i vores dataframe, så der kun vises afstemningssteder, hvor kommunenavnet er “Aarhus”. Derudover har jeg tilføjet et fill på afstemningsområdets navn for at give hver område sin egen farve.\n\nafstemningssteder_geodata %&gt;%\n  filter(kommunenavn == \"Aarhus\") %&gt;%\n  ggplot(aes(fill = navn)) +\n  geom_sf() +\n  ggthemes::theme_map() +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\nFigur 2: Kort over alle afstemningsområder i Aarhus Kommune."
+    "section": "reverse()",
+    "text": "reverse()\ndawaR::reverse() bruges til at reverse-geokode koordinater til et geografisk område. Dette kan også gøres med {sf} pakken, men i reverse() slås der direkte op i det officielle register i stedet for at lave udregningen lokalt på din maskine."
   },
   {
     "objectID": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
