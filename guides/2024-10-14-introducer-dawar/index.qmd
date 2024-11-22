@@ -1,7 +1,7 @@
 ---
-title: Nemt Danmarkskort i R
+title: Introducerer `{dawaR}`
 citation:
-  url: https://aleksanderbl.dk/guides/2024-05-19-danmarkskort-i-r
+  url: https://aleksanderbl.dk/guides/2024-10-14-introducer-dawar
 bibliography: refs.bib
 execute:
   echo: true
@@ -10,12 +10,13 @@ execute:
 link-external-icon: true
 link-external-newwindow: true
 other-links:
-  - text: Samlet script
-    icon: code
-    href: https://github.com/aleksanderbl29/aleksanderbldk/blob/main/guides/2024-06-29-danmarkskort-i-r/kort.r
-  - text: Mikkel Krogsholms guide
-    href: https://www.linkedin.com/pulse/easy-maps-denmark-r-mikkel-freltoft-krogsholm/
-date: 2024-06-29
+  - text: Dokumentation
+    icon: book
+    href: https://dawar.aleksanderbl.dk
+  - text: Github
+    icon: github
+    href: https://github.com/aleksanderbl29/dawaR
+date: 2024-11-22
 ---
 
 ## Baggrund
@@ -45,7 +46,7 @@ options(timeout = 600)
 
 ## Data
 
-For at tegne et præcist danmarkskort kan vi hente `geojson` data fra @apidawa2024. De udstiller en udmærket `API` der kan levere kortdata til os. For at vi kan benytte en `API` i `R` skal vi først definere et `URL` og dernæst bede om at downloade den fil der hører til på den hjemmeside.
+For at tegne et præcist danmarkskort kan vi hente `geojson` data fra @apidawa. De udstiller en udmærket `API` der kan levere kortdata til os. For at vi kan benytte en `API` i `R` skal vi først definere et `URL` og dernæst bede om at downloade den fil der hører til på den hjemmeside.
 
 
 1. Først definerer vi `API`ens `URL`.
@@ -133,10 +134,6 @@ afstemningssteder_geodata %>%
   ggthemes::theme_map() +
   theme(legend.position = "none")
 ```
-
-## Samlet kode
-
-Alt hvad jeg har gennemgået i denne guide kan findes i et samlet `r`-script [på min github](https://github.com/aleksanderbl29/aleksanderbldk/blob/main/guides/2024-06-29-danmarkskort-i-r/kort.r). Den kan også findes [her på hjemmesiden](./kort-kode.qmd).
 
 ```{r}
 #| echo: false

@@ -17,3 +17,27 @@ language:
   appendix-attribution-cite-as: "BibTeX henvisning:"
 
 anchor-sections: true
+
+fig-cap-location: margin
+
+# format:
+#   html:
+#     toc: true
+#     smooth-scroll: true
+#     fig-cap-location: margin
+#   pdf:
+#     fig-pos: "tbh"
+#     tbl-pos: "tb"
+#     latex-auto-install: true
+#     keep-tex: true
+#     include-in-header:
+#       - file: ../header.tex
+#     geometry:
+#       - top=2cm
+#       - bottom=4cm
+#       - left=2cm
+#       - right=2cm
+#       - heightrounded
+#     linestretch: 1.5
+#     papersize: a4
+#     fig-cap-location: bottom

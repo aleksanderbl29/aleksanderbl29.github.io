@@ -30,3 +30,5 @@ En bachelor på IFSK skal indeholde:
 ## Kort
 
 Jeg har lavet danmarkskort i forbindelse med min opgave. Det har jeg skrevet [en guide om](../2024-06-29-danmarkskort-i-r/index.qmd)
+
+Hej

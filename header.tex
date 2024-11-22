@@ -1,0 +1,43 @@
+
+\usepackage{float}
+\floatplacement{table}{H}
+
+\usepackage{caption}
+
+\captionsetup{justification=raggedright,singlelinecheck=false}
+
+\usepackage{lipsum}
+
+\usepackage{icomma}
+\usepackage{siunitx}
+\sisetup{
+  add-decimal-zero = false , % default setting, not needed
+  output-decimal-marker = {,} ,
+  group-separator = \, % default setting, not needed
+}
+
+% gt packages
+
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{multirow}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+
+\fancypagestyle{fancy}{
+ \fancyhf{} % clear all header and footer fields
+ \fancyfoot[C]{Side \thepage\ af \pageref*{LastPage}}
+ \renewcommand{\headrulewidth}{0pt}
+ \renewcommand{\footrulewidth}{0pt}
+}
+\fancypagestyle{plain}{
+ \fancyhf{}
+ \fancyfoot[C]{Side \thepage\ af \pageref*{LastPage}}
+ \renewcommand{\headrulewidth}{0pt}
+ \renewcommand{\footrulewidth}{0pt}
+}
+\pagestyle{fancy}

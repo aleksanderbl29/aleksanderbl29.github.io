@@ -8,9 +8,8 @@ citation:
   url: https://aleksanderbl.dk/guides/2024-05-17-installer-output-zotero
 bibliography: refs.bib
 date: 2024-05-17
-last-modified: 2024-05-27
+last-modified: 2024-11-22
 csl: documents/politica-w-ibid.csl
-draft: true
 other-links:
   - text: Send mig en mail
     icon: envelope
@@ -91,4 +90,4 @@ I bunden af denne side kan du se en litteraturliste med disse henvisninger i ful
 - Når du kontakter mig vedrørende en fejl er det en god ide at sende din csl-fil med; det gør det nemlig nememre at finde ud af, hvad fejlen er og hvor den findes.
 
 ### Hvorfor kan jeg ikke bare downloade output-stilen inde i Zotero som man kan med andre?
-- Jeg arbejder på at få denne output-stil integreret i den primære downloadside, men det kræver at CSL-projektet vil acceptere den. Du kan læse mere om, hvad det kræver [her](https://github.com/citation-style-language/styles/blob/master/README.md#criteria-for-inclusion).
+- Jeg arbejder på at få denne output-stil integreret i den primære downloadside, men det kræver at CSL-projektet vil acceptere den. Du kan læse mere om, hvad det kræver [her](https://github.com/citation-style-language/styles/blob/master/README.md#criteria-for-inclusion). Du kan også følge med i processen [her](https://github.com/citation-style-language/styles/pull/6797).
