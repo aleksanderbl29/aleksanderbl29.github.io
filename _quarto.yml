@@ -14,6 +14,7 @@ filters:
 
 website:
   title: "Aleksander Bang-Larsen"
+  # draft-mode: unlinked
   navbar:
     background: $background-color
     right:
@@ -31,10 +32,6 @@ website:
       - about.qmd
       - text: Kontakt mig
         menu:
-          - icon: twitter
-            text: Twitter
-            href: https://x.com/bang_aleksander
-            target: _blank
           - icon: linkedin
             text: LinkedIn
             href: https://www.linkedin.com/in/aleksanderbl
@@ -51,7 +48,7 @@ website:
     right: Denne side er bygget med [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/aleksanderbl29/aleksanderbldk){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} og [Quarto](https://quarto.org/){target=_blank}
 
   repo-actions: []
-  repo-url: https://github.com/aleksanderbl29/aleksanderbldk
+  repo-url: https://github.com/aleksanderbl29/aleksanderbl29.github.io
   repo-link-target: _blank
   site-url: https://aleksanderbl.dk
   open-graph: true

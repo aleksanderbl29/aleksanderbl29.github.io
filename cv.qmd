@@ -1,24 +1,29 @@
 ---
 title: Aleksander Bang-Larsen
 subtitle: Curriculum Vitae
+email: cv@aleksanderbl.dk
+telephone: 42521513
+homepage: aleksanderbl.dk
+github: aleksanderbl29
+fontfamily: libertine
+monofont: inconsolata
+spacing: onehalf
 format:
-  html:
-    theme:
-      - cosmo
-      - styles.css
-    toc: true
-    smooth-scroll: true
+  html: default
   pdf:
-    geometry:
-      - top=2cm
-      - bottom=4cm
-      - left=2cm
-      - right=2cm
-      - heightrounded
-    papersize: a4
-    # keep-tex: true
-    # template-partials:
-    #   - tex/cv-before-body.tex
+    template: cv-template.latex
+other-links:
+  - text: Send mig en mail!
+    icon: envelope
+    href: mailto:cv@aleksanderbl.dk
+  - text: LinkedIn
+    icon: linkedin
+    href: https://linkedin.com/in/aleksanderbl
+    target: _blank
+  - text: Github
+    icon: github
+    href: https://github.com/aleksanderbl29
+    target: _blank
 ---
 
 # Om mig
@@ -48,7 +53,7 @@ Jeg har min studentereksamen fra Herning Gymnasium. Her havde jeg en samfundsspr
 ## 2023 til nu --- Underviser i Excel og VBA hos Djøf
 
 Underviser i Excel og VBA for Djøf Studerende, hvor jeg underviser medlemmer af Djøf Studerende i Excel på fire kursusniveauer samt VBA på to niveauer.
-Her har jeg fået forbedret mine undervisningskompetencer og er blevet bedste venner med Excel.
+Her har jeg udviklet mine undervisningskompetencer og er komfortabel med præsentation foran store mængder.
 
 ## 2021 til 2023 --- Student Assistant hos EG A/S
 
@@ -57,3 +62,32 @@ Ansat som studentermedhjælper i først kreditor-bogholderiet, og derefter debit
 ## 2020 til 2021 --- Video Editor og ansvarlig for webshops hos Gigantic ApS
 
 I de første 4 måneder af min ansættelse var mine primære opgaver at redigere reklame-indhold til sociale medier for diverse webshops i virksomheden i Shopify. Herefter fik jeg ansvaret for et af virksomhedens webshop-brands, hvor jeg styrede webshops i Danmark, Sverige, Norge og Finland.
+
+::: {.content-visible when-format="html"}
+
+# Kompetencer
+
+```{r, dev = "png", dev.args=list(bg="transparent")}
+#| echo: false
+#| warning: false
+#| fig-width: 10
+#| fig-height: 3
+library(tidyverse)
+
+skills <- list(R = 90, Excel = 87, Git = 70, VBA = 60, LaTeX = 50)
+sorted_names <- names(sort(unlist(skills), decreasing = FALSE))
+
+tibble(skill = names(skills),
+       level = unlist(skills)) |> 
+  mutate(level = level / 100) |> 
+  ggplot(aes(x = reorder(skill, level), y = level)) +
+  geom_col(fill = "#98D8B0", width = 0.7) +
+  annotate("text", x = seq(1, length(skills)), y = 0.025, label = sorted_names,
+           hjust = 0, size = 5, color = "black") +
+  coord_flip() +
+  theme_void()
+```
+
+:::
+
+
