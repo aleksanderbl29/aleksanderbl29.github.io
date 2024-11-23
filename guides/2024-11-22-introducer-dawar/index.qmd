@@ -17,6 +17,12 @@ other-links:
 date: 2024-11-22
 ---
 
+```{r}
+#| echo: false
+library(tidyverse)
+```
+
+
 Jeg har for nyligt offentliggjort min pakke `{dawaR}` der også er publiceret på [CRAN](https://CRAN.R-project.org/package=dawaR).
 
 # Hvad skal jeg bruge pakken til?
@@ -44,7 +50,7 @@ Jeg lavede denne pakke fordi jeg blev træt af manuelt at interagere med Danmark
 #| column: margin
 #| fig-cap: Hurtigt kort over de danske regioner
 #| warning: false
-dawaR::get_map_data("regioner") |> ggplot2::ggplot() + ggplot2::geom_sf() + ggplot2::theme_void()
+dawaR::get_map_data("regioner") |> ggplot(aes(fill = navn)) + geom_sf() + theme_void()
 ```
 
 ## `autocomplete()`
