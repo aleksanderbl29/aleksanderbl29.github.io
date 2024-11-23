@@ -51,28 +51,26 @@ font-style: inherit;">get_map_data</span>(<span class="st" style="color: #20794D
 background-color: null;
 font-style: inherit;">"regioner"</span>) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">|&gt;</span> ggplot2<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">|&gt;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">+</span> ggplot2<span class="sc" style="color: #5E5E5E;
+font-style: inherit;">fill =</span> navn)) <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">geom_sf</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">+</span> ggplot2<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">theme_void</span>()</span></code></pre></div>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption>Hurtigt kort over de danske regioner</figcaption>
 </figure>
 </div>

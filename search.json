@@ -25,7 +25,7 @@
     "href": "guides/2024-11-22-introducer-dawar/index.html#get_map_data",
     "title": "Introducerer {dawaR}",
     "section": "get_map_data()",
-    "text": "get_map_data()\ndawaR::get_map_data() returnerer et {sf} objekt med multipolygoner der er klar til at blive plottet med ggplot2::geom_sf(). Det kan du læse mere om på pakkens hjemmeside. get_map_data() kan også bruges hvis du skal hente data til et geografisk projekt, men gerne vil slippe for at omformatere koordinater til polygoner og håndtere et crs - Den gør det hele for dig.\n\ndawaR::get_map_data(\"regioner\") |&gt; ggplot2::ggplot() + ggplot2::geom_sf() + ggplot2::theme_void()\n\n\n\n\n\nHurtigt kort over de danske regioner"
+    "text": "get_map_data()\ndawaR::get_map_data() returnerer et {sf} objekt med multipolygoner der er klar til at blive plottet med ggplot2::geom_sf(). Det kan du læse mere om på pakkens hjemmeside. get_map_data() kan også bruges hvis du skal hente data til et geografisk projekt, men gerne vil slippe for at omformatere koordinater til polygoner og håndtere et crs - Den gør det hele for dig.\n\ndawaR::get_map_data(\"regioner\") |&gt; ggplot(aes(fill = navn)) + geom_sf() + theme_void()\n\n\n\n\n\nHurtigt kort over de danske regioner"
   },
   {
     "objectID": "guides/2024-11-22-introducer-dawar/index.html#autocomplete",
