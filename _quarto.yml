@@ -14,6 +14,7 @@ filters:
 
 website:
   title: "Aleksander Bang-Larsen"
+  description: "Aleksander Bang-Larsens hjemmeside, hvor du kan finde guides og andet"
   # draft-mode: unlinked
   navbar:
     background: $background-color
@@ -42,6 +43,8 @@ website:
       - icon: github
         href: https://github.com/aleksanderbl29/aleksanderbldk
         target: _blank
+      - icon: rss
+        href: guides.xml
   page-footer:
     background: light
     left: © Copyright 2024, Aleksander Bang-Larsen
