@@ -9,8 +9,8 @@ project:
 
 lang: da
 
-filters:
-  - auto-dark
+# filters:
+#   - auto-dark
 
 website:
   title: "Aleksander Bang-Larsen"
@@ -30,7 +30,7 @@ website:
       - href: cv.qmd
         # text: Quarto CV
         text: CV
-      - about.qmd
+      - rpkgs.qmd
       - text: Kontakt mig
         menu:
           - icon: linkedin
