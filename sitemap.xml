@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aleksanderbl.dk/index.html</loc>
-    <lastmod>2024-12-25T18:03:38.643Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/index.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/guides/2024-06-29-danmarkskort-i-r/kort-kode.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/cv.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/about.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/guides/2024-05-17-installer-output-zotero/index.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aleksanderbl.dk/guides/2024-06-29-danmarkskort-i-r/index.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
+    <loc>https://aleksanderbl.dk/rpkgs.html</loc>
+    <lastmod>2025-01-31T11:38:15.224Z</lastmod>
   </url>
   <url>
     <loc>https://aleksanderbl.dk/guides.html</loc>
-    <lastmod>2024-12-25T18:03:38.627Z</lastmod>
+    <lastmod>2025-01-31T11:38:15.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/guides/2024-06-29-danmarkskort-i-r/index.html</loc>
+    <lastmod>2025-01-31T11:38:15.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/guides/2024-05-17-installer-output-zotero/index.html</loc>
+    <lastmod>2025-01-31T11:38:15.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/cv.html</loc>
+    <lastmod>2025-01-31T11:38:15.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/guides/2024-06-29-danmarkskort-i-r/kort-kode.html</loc>
+    <lastmod>2025-01-31T11:38:15.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/guides/2024-11-22-introducer-dawar/index.html</loc>
+    <lastmod>2025-01-31T11:38:15.224Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aleksanderbl.dk/index.html</loc>
+    <lastmod>2025-01-31T11:38:15.224Z</lastmod>
   </url>
 </urlset>
