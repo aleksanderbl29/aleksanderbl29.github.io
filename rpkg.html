@@ -141,7 +141,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./rpkgs.html" aria-current="page"> 
+    <a class="nav-link active" href="./rpkg.html" aria-current="page"> 
 <span class="menu-text">R-pakker</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -218,18 +218,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Mine originale pakker</h1>
 <p>Jeg har udviklet API-pakken <code>{dawaR}</code> samt geodatapakken <code>{geodk}</code>. Derudover har jeg ansvar for vedligehold af API-pakken <code>{dkstat}</code> der giver adgang til Danmarks Statistiks statistikbank.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dawaR)</span></code><button title="Kopier til udklipsholder" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>## {dawaR} provides data from the Danish Agency of Climate Data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>## Terms and conditions apply.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>## Read more at: https://dawadocs.dataforsyningen.dk/dok/om#vilkaar</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodk)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hexsession<span class="sc">::</span><span class="fu">make_tile</span>(<span class="fu">c</span>(<span class="st">"dawaR"</span>, <span class="st">"geodk"</span>, <span class="st">"dkstat"</span>))</span></code><button title="Kopier til udklipsholder" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dawaR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodk)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>hexsession<span class="sc">::</span><span class="fu">make_tile</span>(<span class="fu">c</span>(<span class="st">"dawaR"</span>, <span class="st">"geodk"</span>, <span class="st">"dkstat"</span>))</span></code><button title="Kopier til udklipsholder" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="hexsession-container" style="width:100%; height:100%; overflow:hidden;">
 
