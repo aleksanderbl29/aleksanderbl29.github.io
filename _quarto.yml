@@ -30,7 +30,7 @@ website:
       - href: cv.qmd
         # text: Quarto CV
         text: CV
-      - rpkgs.qmd
+      - rpkg.qmd
       - text: Kontakt mig
         menu:
           - icon: linkedin
