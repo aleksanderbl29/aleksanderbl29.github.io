@@ -4,7 +4,7 @@
     "href": "rpkg.html",
     "title": "R-pakker",
     "section": "",
-    "text": "Mine originale pakker\nJeg har udviklet API-pakken {dawaR} samt geodatapakken {geodk}. Derudover har jeg ansvar for vedligehold af API-pakken {dkstat} der giver adgang til Danmarks Statistiks statistikbank.\n\nlibrary(dawaR)\nlibrary(geodk)\nhexsession::make_tile(c(\"dawaR\", \"geodk\", \"dkstat\"))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n  \n    created with hexsession"
+    "text": "Mine originale pakker\nJeg har udviklet API-pakken {dawaR} samt geodatapakken {geodk}. Derudover har jeg ansvar for vedligehold af API-pakken {dkstat} der giver adgang til Danmarks Statistiks statistikbank.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n  \n    created with hexsession"
   },
   {
     "objectID": "guides.html",
