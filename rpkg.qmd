@@ -10,6 +10,7 @@ Jeg har udviklet API-pakken `{dawaR}` samt geodatapakken `{geodk}`. Derudover ha
 
 ```{r}
 #| warning: false
+#| echo: false
 library(dawaR)
 library(geodk)
 hexsession::make_tile(c("dawaR", "geodk", "dkstat"))

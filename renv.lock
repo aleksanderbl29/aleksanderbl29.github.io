@@ -860,13 +860,8 @@
     "hexsession": {
       "Package": "hexsession",
       "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "hexsession",
-      "RemoteUsername": "luisdva",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "08563e4cb357dd14b91af2f0959889b43d39a7d7",
+      "Source": "Repository",
+      "Repository": "https://luisdva.r-universe.dev",
       "Requirements": [
         "base64enc",
         "chromote",
@@ -876,7 +871,7 @@
         "magick",
         "purrr"
       ],
-      "Hash": "ec882d6c4ea1debc7a989035e474b811"
+      "Hash": "4874d046add09911c2e54aef773ff9b8"
     },
     "highr": {
       "Package": "highr",
