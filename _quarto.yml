@@ -47,7 +47,7 @@ website:
         href: guides.xml
   page-footer:
     background: light
-    left: © Copyright 2024, Aleksander Bang-Larsen
+    left: © Copyright 2025, Aleksander Bang-Larsen
     right: Denne side er bygget med [{{< fa brands github title="GitHub octocat logo" >}}](https://github.com/aleksanderbl29/aleksanderbldk){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} og [Quarto](https://quarto.org/){target=_blank}
 
   repo-actions: []
