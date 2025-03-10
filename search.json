@@ -4,7 +4,7 @@
     "href": "rpkg.html",
     "title": "R-pakker",
     "section": "",
-    "text": "Mine originale pakker\nJeg har udviklet API-pakken {dawaR} samt geodatapakken {geodk}. Derudover har jeg ansvar for vedligehold af API-pakken {dkstat} der giver adgang til Danmarks Statistiks statistikbank.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n  \n    created with hexsession"
+    "text": "Mine originale pakker\nJeg har udviklet API-pakken {dawaR} samt geodatapakken {geodk}. Derudover har jeg ansvar for vedligehold af API-pakken {dkstat} der giver adgang til Danmarks Statistiks statistikbank.\n\n\n\n    \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n  \n    created with hexsession"
   },
   {
     "objectID": "guides.html",
@@ -145,6 +145,20 @@
     "title": "Aleksander Bang-Larsen",
     "section": "2020 til 2021 — Video Editor og ansvarlig for webshops hos Gigantic ApS",
     "text": "2020 til 2021 — Video Editor og ansvarlig for webshops hos Gigantic ApS\nI de første 4 måneder af min ansættelse var mine primære opgaver at redigere reklame-indhold til sociale medier for diverse webshops i virksomheden i Shopify. Herefter fik jeg ansvaret for et af virksomhedens webshop-brands, hvor jeg styrede webshops i Danmark, Sverige, Norge og Finland."
+  },
+  {
+    "objectID": "cv.html#r-og-statistisk-programmering",
+    "href": "cv.html#r-og-statistisk-programmering",
+    "title": "Aleksander Bang-Larsen",
+    "section": "R og statistisk programmering",
+    "text": "R og statistisk programmering\nJeg har meget erfaring i R med analytiske pipelines og reproducerbare analyser. Her har jeg brugt targets sammen med eksempelvis tidymodels."
+  },
+  {
+    "objectID": "cv.html#r-pakker",
+    "href": "cv.html#r-pakker",
+    "title": "Aleksander Bang-Larsen",
+    "section": "R-pakker",
+    "text": "R-pakker\nJeg vedligeholder et par R-pakker. En af disse har fundet sin vej til CRAN."
   },
   {
     "objectID": "guides/2024-06-29-danmarkskort-i-r/kort-kode.html",
