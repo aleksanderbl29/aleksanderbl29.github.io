@@ -67,9 +67,18 @@ I de første 4 måneder af min ansættelse var mine primære opgaver at redigere
 
 # Kompetencer
 
+## R og statistisk programmering
+
+Jeg har meget erfaring i R med analytiske pipelines og reproducerbare analyser. Her har jeg brugt `targets` sammen med eksempelvis `tidymodels`.
+
+## R-pakker
+
+Jeg vedligeholder et par `R`-pakker. En af disse har fundet sin vej til [CRAN](https://cran.r-project.org/).
+
 ```{r, dev = "png", dev.args=list(bg="transparent")}
 #| echo: false
 #| warning: false
+#| output: false
 #| fig-width: 10
 #| fig-height: 3
 library(tidyverse)
