@@ -73,7 +73,7 @@ Jeg har meget erfaring i R med analytiske pipelines og reproducerbare analyser. 
 
 ## R-pakker
 
-Jeg vedligeholder et par `R`-pakker. En af disse har fundet sin vej til [CRAN](https://cran.r-project.org/).
+Jeg vedligeholder et par `R`-pakker. En af disse har fundet sin vej til [CRAN](https://cran.r-project.org/). Du kan finde en oversigt på siden [r-pakker](/rpkg.html).
 
 ```{r, dev = "png", dev.args=list(bg="transparent")}
 #| echo: false
