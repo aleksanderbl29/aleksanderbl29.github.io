@@ -65,3 +65,4 @@ format:
       - styles.css
     toc: true
     smooth-scroll: true
+  gfm: default
